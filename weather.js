@@ -38,18 +38,24 @@ let handleWeatherResponse = function(response) {
   console.log(Math.round(response.daily.data[0].temperatureLow));
   console.log(response.daily.data[0].summary);
 
+  document.getElementById("current-conditions-icon").innerHTML = icon(response.currently);
+  document.getElementById("current-conditions-text").innerHTML = Math.round(response.currently.temperature) + " and " + response.currently.summary;
+
+  $(".current").fadeIn(2500);
+
   $(".forecast").empty();
 
   let markup = "";
   for(let i=0; i<6; i++) {
     markup += "<div class='col'>";
-    markup += "<h3 id='conditions-icon'>" + icon(response.daily.data[i]) + "</h3>";
-    markup += "<h4 id='temperature'>" + Math.round(response.daily.data[i].temperatureHigh) + " | " + Math.round(response.daily.data[i].temperatureLow) + "</h4>";
-    markup += "<h5 id='conditions-text'>" + response.daily.data[i].summary + "</h5>";
+    markup += "<h3>" + icon(response.daily.data[i]) + "</h3>";
+    markup += "<h4>" + Math.round(response.daily.data[i].temperatureHigh) + " | " + Math.round(response.daily.data[i].temperatureLow) + "</h4>";
+    markup += "<h5>" + response.daily.data[i].summary + "</h5>";
     markup += "</div>";
   }
 
   $(".forecast").append(markup);
+
   $(".forecast").fadeIn(2500);
   // *** your code ends here - no, really.
 };
